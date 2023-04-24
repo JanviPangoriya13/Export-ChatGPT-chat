@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name": "Export ChatGPT Chats",
+  "version": "1.0.0",
+  "author": "PulseLabs",
+  "description": "Backup your OpenAI ChatGPT history in JSON format",
+
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+
+  "background": {
+    "service_worker": "service.js"
+  },
+  "host_permissions": ["*://*.chat.openai.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.chat.openai.com/*"],
+      "js": ["scripts/content-script.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "permissions": ["tabs", "downloads", "storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}
